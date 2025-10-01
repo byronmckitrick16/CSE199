@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Honeycomb Hex Grid</title>
+  <style>
+    body {
+      background: #222;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .hex-grid {
+      display: flex;
+      flex-direction: column; /* vertical spacing between rows */
+      gap: 1px;
+    }
+
+    .hex-row {
+      display: flex; /* horizontal spacing between hexes */
+      gap: 2px;
+    }
+
+    /* offset every even row */
+    .hex-row:nth-child(even) {
+      margin-left: 35px; /* half hex width */
+    }
+
+    .hex {
+      width: 70px;
+      height: 80.8px; /* width * √3/2 */
+      background: #fdd835;
+      clip-path: polygon(
+        50% 0%, 100% 25%, 100% 75%,
+        50% 100%, 0% 75%, 0% 25%
+      );
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+      font-size: 14px;
+      color: #000;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: -20px;
+    }
+
+    .hex:hover {
+      background: #ffecb3;
+    }
+  </style>
+</head>
+<body>
+  <div class="hex-grid">
+    <div class="hex-row">
+      <div class="hex">1</div>
+      <div class="hex">2</div>
+      <div class="hex">3</div>
+      <div class="hex">4</div>
+    </div>
+    <div class="hex-row">
+      <div class="hex">5</div>
+      <div class="hex">6</div>
+      <div class="hex">7</div>
+    </div>
+    <div class="hex-row">
+      <div class="hex">8</div>
+      <div class="hex">9</div>
+      <div class="hex">10</div>
+      <div class="hex">11</div>
+    </div>
+  </div>
+</body>
+</html>
