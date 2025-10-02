@@ -36,10 +36,3 @@ flex-direction: column;
 .hex_row:nth-child(even) {
     margin-left: 35px;
 }
-/* .hex:nth-child(10n+6),
-.hex:nth-child(10n+7),
-.hex:nth-child(10n+8),
-.hex:nth-child(10n+9),
-.hex:nth-child(10n+10) {
-    margin-left: 30px;
-} */
