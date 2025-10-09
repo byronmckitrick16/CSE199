@@ -1,5 +1,14 @@
+:root {
+    --primary-color: #A62639;
+    --secondary-color: #222;
+    --accent-color1: #a3a3a3;
+    --accent-color2: #136f63;
+    --accent-color3: #61ff7e;
+    --accent-color4: #333;
+}
+
 body {
-background: #222;
+background: var(--secondary-color);
 color: white;
 font-family: sans-serif;
 display: flex;
@@ -7,20 +16,20 @@ align-items: center;
 flex-direction: column;
 }
 
-.hex_grid {
+.board {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    border: 5px solid #a3a3a3;
+    border: 5px solid var(--accent-color1);
     width: 575px;
     height: 577px;
-    background-color: #333;
+    background-color: var(--accent-color4);
 }
 
 .hex {
     width: 70px;
     height: 80px;
-    background-color: blue;
+    background-color: var(--primary-color);
     clip-path:polygon(
         50% 0%, 100% 25%, 100% 75%,
         50% 100%, 0% 75%, 0% 25%
@@ -35,4 +44,8 @@ flex-direction: column;
 
 .hex_row:nth-child(even) {
     margin-left: 35px;
+}
+
+.revealed {
+
 }
