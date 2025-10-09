@@ -29,7 +29,7 @@ flex-direction: column;
 .hex {
     width: 70px;
     height: 80px;
-    background-color: var(--primary-color);
+    background-color: blue;
     clip-path:polygon(
         50% 0%, 100% 25%, 100% 75%,
         50% 100%, 0% 75%, 0% 25%

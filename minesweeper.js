@@ -140,7 +140,8 @@ function revealHex(grid, row, col) {
     if (cell.revealed || cell.flagged) return;
 
     cell.revealed = true
-    
+
+    console.log(cell)
 }
 
 function getNeighbors() {
