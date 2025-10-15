@@ -56,7 +56,7 @@ function placeMines(grid, mineCount) {
 function countNeighbors(grid, row, col) {
     let mineCount = 0
 
-    const oddOffsets = [
+    const evenOffsets = [
         [-1, -1],
         [-1, 0],
         [0, -1],
@@ -65,7 +65,7 @@ function countNeighbors(grid, row, col) {
         [1, 0],
     ];
 
-    const evenOffsets = [
+    const oddOffsets = [
         [-1, 0],
         [-1, 1],
         [0, -1],
@@ -114,7 +114,7 @@ function createBoard(grid) {
             const cell = grid[r][c]
 
             const hex = document.createElement("div");
-            hex.classList.add("hex");
+            hex.classList.add("hex")
 
             hex.dataset.row = r;
             hex.dataset.col = c;
@@ -141,7 +141,22 @@ function revealHex(grid, row, col) {
 
     cell.revealed = true
 
-    console.log(cell)
+    const hex = document.querySelector(`.hex[data-row="${row}"][data-col="${col}"]`);
+    console.log(hex)
+
+    hex.classList.add("revealed");
+    
+    if (cell.mine) {
+        hex.classList.add("mine");
+        hex.textContent = "💣";
+        gameOver();
+        return;
+    }
+
+    if (cell.neighbors > 0) {
+        hex.textContent = cell.neighbors;
+    }
+    checkWin();
 }
 
 function getNeighbors() {
@@ -153,7 +168,7 @@ function revealNeighbors() {
 }
 
 function toggleFlag(r, c) {
-    console.log(r, c)
+
 }
 
 function checkWin() {
@@ -168,5 +183,5 @@ function resetGame() {
 
 }
 
-const startGame = document.querySelector("#startGame");
+const startGame = document.querySelector("#beginingLevelButton");
 startGame.addEventListener("click", main)

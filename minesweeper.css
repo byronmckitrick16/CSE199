@@ -1,40 +1,72 @@
 :root {
-    --primary-color: #A62639;
-    --secondary-color: #222;
-    --accent-color1: #a3a3a3;
-    --accent-color2: #136f63;
-    --accent-color3: #61ff7e;
-    --accent-color4: #333;
+    --primary-color: #a3a3a3;
+    --secondary-color: #111111;
+    --accent-color1: #333;
+    --accent-color2: #6e6e6e;
 }
 
 body {
-background: var(--secondary-color);
-color: white;
+background: var(--primary-color);
 font-family: sans-serif;
-display: flex;
-align-items: center;
-flex-direction: column;
+font-size: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.game {
+    display: flex;
+    justify-content: center;
+}
+
+.buttons {
+    width: 300px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.buttons button {
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: var(--accent-color2);
+    font-size: 1rem;
 }
 
 .board {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    border: 5px solid var(--accent-color1);
+    border: 8px solid var(--secondary-color);
     width: 575px;
     height: 577px;
-    background-color: var(--accent-color4);
+    background-color: var(--accent-color1);
+    align-content: center;
+    flex: 0 0 auto;
+}
+
+.timerDiv {
+    width: 300px;
 }
 
 .hex {
     width: 70px;
     height: 80px;
-    background-color: blue;
+    background-color: #808080;
     clip-path:polygon(
         50% 0%, 100% 25%, 100% 75%,
         50% 100%, 0% 75%, 0% 25%
     );
     margin-bottom: -20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
 }
 
 .hex_row {
@@ -47,5 +79,9 @@ flex-direction: column;
 }
 
 .revealed {
+    background-color: #444444;
+}
 
+.mine {
+    background-color: red;
 }
