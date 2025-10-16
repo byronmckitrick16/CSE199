@@ -55,17 +55,21 @@ h1 {
 }
 
 .hex {
-    width: 70px;
-    height: 80px;
     background-color: #808080;
     clip-path:polygon(
         50% 0%, 100% 25%, 100% 75%,
         50% 100%, 0% 75%, 0% 25%
     );
-    margin-bottom: -20px;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
+}
+
+.easyMode {
+    width: 70px;
+    height: 80px;
+    margin-bottom: -20px;
     font-size: 1.5rem;
 }
 
@@ -83,5 +87,11 @@ h1 {
 }
 
 .mine {
-    background-color: red;
+    background-color: #d91919;
+}
+
+.gameWinConfetti {
+    height: 570px;
+    position: fixed;
+    object-fit: cover;
 }
