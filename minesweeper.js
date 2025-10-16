@@ -157,6 +157,7 @@ function revealHex(grid, row, col) {
         hex.classList.add("mine");
         hex.textContent = "💣";
         gameOver();
+        revealBoard();
         return;
     }
 
@@ -200,17 +201,19 @@ function checkWin(grid) {
 function gameWon() {
     // display a screen telling them they won
     const board = document.querySelector(".board")
-    const winConfetti = '<img class="gameWinConfetti" src="confetti_2.gif" alt="animation for when you win"></img>'
+    const winConfetti = '<img class="gameWinConfetti" src="confetti.gif" alt="animation for when you win"></img>'
     board.insertAdjacentHTML("beforeend", winConfetti)
 }
 
 function gameOver() {
     // display a screen telling them they lost and letting them see where all the mines were
-
+    const board = document.querySelector(".board")
+    const loseExplostion = '<img class="loseExplostion" src="explosion.gif" alt="animation for when you lose">'
+    board.insertAdjacentHTML("beforeend", loseExplostion)
 }
 
-function resetGame() {
-    
+function revealBoard() {
+
 }
 
 function easyLevel(event) {
@@ -245,3 +248,4 @@ hardMode.addEventListener("click", hardLevel)
 
 // function getNeighbors() {}
 // function revealNeighbors() {}
+// function resetGame() {}

@@ -93,5 +93,10 @@ h1 {
 .gameWinConfetti {
     height: 570px;
     position: fixed;
-    object-fit: cover;
+}
+
+.loseExplostion {
+    width: 570px;
+    position: fixed;
+    padding-top: 100px;
 }
