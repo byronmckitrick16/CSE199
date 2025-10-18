@@ -156,8 +156,7 @@ function revealHex(grid, row, col) {
     if (cell.mine) {
         hex.classList.add("mine");
         hex.textContent = "💣";
-        gameOver();
-        revealBoard();
+        gameOver(grid);
         return;
     }
 
@@ -170,6 +169,7 @@ function revealHex(grid, row, col) {
 function toggleFlag(grid, row, col) {
     // flag each cell that the user thinks is a mine
     const cell = grid[row][col];
+    console.log(cell)
     const hex = document.querySelector(`.hex[data-row="${row}"][data-col="${col}"]`);
     if (cell.revealed) return
     if (cell.flagged == true) {
@@ -182,6 +182,7 @@ function toggleFlag(grid, row, col) {
 }
 
 function checkWin(grid) {
+    // check to see if all not mine cells are revealed
     let allSafeCellsReaveled = true
     for (let r = 0; r < grid.length; r++) {
         for (let c = 0; c < grid[r].length; c++) {
@@ -205,15 +206,42 @@ function gameWon() {
     board.insertAdjacentHTML("beforeend", winConfetti)
 }
 
-function gameOver() {
+function gameOver(grid) {
     // display a screen telling them they lost and letting them see where all the mines were
     const board = document.querySelector(".board")
     const loseExplostion = '<img class="loseExplostion" src="explosion.gif" alt="animation for when you lose">'
     board.insertAdjacentHTML("beforeend", loseExplostion)
+    revealBoard(grid);
 }
 
-function revealBoard() {
+function revealBoard(grid) {
+    // reveal all of the cells
+    for (let r = 0; r < grid.length; r++) {
+        for (let c = 0; c < grid[r].length; c++) {
+            const cell = grid[r][c]
+            const hex = document.querySelector(`.hex[data-row="${r}"][data-col="${c}"]`);
 
+            if (!cell.flagged) {
+                hex.classList.add("revealed");
+                if (cell.neighbors > 0) {
+                    hex.textContent = cell.neighbors;
+                }
+                if (cell.mine) {
+                    hex.classList.add("mine");
+                    hex.textContent = "💣";
+                }
+            }
+            if (!cell.mine && cell.flagged) {
+                hex.classList.add("revealed");
+                console.log(cell)
+                if (cell.neighbors > 0) {
+                    hex.innerHTML = cell.neighbors;   
+                } else {
+                    hex.innerHTML = " "
+                }
+            }
+        }
+    }
 }
 
 function easyLevel(event) {

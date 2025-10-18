@@ -96,7 +96,8 @@ h1 {
 }
 
 .loseExplostion {
-    width: 570px;
+    width: 575px;
     position: fixed;
-    padding-top: 100px;
+    padding-top: 80px;
+    padding-bottom: 90px;
 }
