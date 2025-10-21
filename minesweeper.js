@@ -195,15 +195,16 @@ function checkWin(grid) {
         }
     }
     if (allSafeCellsReaveled) {
-        gameWon()
+        gameWon(grid)
     }
 }
 
-function gameWon() {
+function gameWon(grid) {
     // display a screen telling them they won
     const board = document.querySelector(".board")
     const winConfetti = '<img class="gameWinConfetti" src="confetti.gif" alt="animation for when you win"></img>'
     board.insertAdjacentHTML("beforeend", winConfetti)
+    revealBoard(grid)
 }
 
 function gameOver(grid) {
@@ -233,7 +234,6 @@ function revealBoard(grid) {
             }
             if (!cell.mine && cell.flagged) {
                 hex.classList.add("revealed");
-                console.log(cell)
                 if (cell.neighbors > 0) {
                     hex.innerHTML = cell.neighbors;   
                 } else {
