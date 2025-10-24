@@ -1,7 +1,11 @@
+let grid = [];
+let timer;
+let timeSec = 0;
+let timeMin = 0;
+
 function createGrid(rows, colsOdd) {
     // create a grid for the layout of the minesweeper game
     let colsEven = colsOdd + 1
-    let grid = [];
 
     for (let r = 0; r < rows; r++) {
         grid[r] = [];
@@ -26,10 +30,9 @@ function createGrid(rows, colsOdd) {
             }
         }
     }
-    return grid
 }
 
-function placeMines(grid, mineCount) {
+function placeMines(mineCount) {
     // randomly place the mines troughout the grid
     let placed = 0;
 
@@ -45,7 +48,7 @@ function placeMines(grid, mineCount) {
     }
 }
 
-function countNeighbors(grid, row, col) {
+function countNeighbors(row, col) {
     // find how many mines are around each cell
     let mineCount = 0
 
@@ -67,7 +70,7 @@ function countNeighbors(grid, row, col) {
         [1, 1]
     ];
     let  offsets = []
-    if (row % 2 === 0) {
+    if (row % 2 == 0) {
         offsets = evenOffsets;
     } else {
         offsets = oddOffsets;
@@ -87,23 +90,23 @@ function countNeighbors(grid, row, col) {
     return mineCount;
 }
 
-function calculateAllNeighbors(grid) {
+function calculateAllNeighbors() {
     // loop the countneighbor function for each cell in the grid
     for (let r = 0; r < grid.length; r++) {
         for (let c = 0; c < grid[r].length; c++) {
-            grid[r][c].neighbors = countNeighbors(grid, r, c);
+            grid[r][c].neighbors = countNeighbors(r, c);
         }
     }
 }
 
-function createBoard(grid, event) {
+function createBoard(event) {
     // add the html for each cell in the game
     const board = document.querySelector(".board");
-    board.innerHTML = "";
 
     for (let r = 0; r < grid.length; r++) {
         const rowDiv = document.createElement("div");
         rowDiv.classList.add("hex_row");
+        addRowClassLevel(rowDiv, event);
 
         for (let c = 0; c < grid[r].length; c++) {
 
@@ -116,12 +119,13 @@ function createBoard(grid, event) {
             hex.dataset.col = c;
 
             hex.addEventListener("click", () => {
-                revealHex(grid, r, c);
+                startTimer();
+                revealHex(r, c);
             });
 
             hex.addEventListener("contextmenu", (event) => {
                 event.preventDefault();
-                toggleFlag(grid, r, c);
+                toggleFlag(r, c);
             });
 
             rowDiv.appendChild(hex);
@@ -141,7 +145,17 @@ function addClassLevel(hex, event) {
     }
 }
 
-function revealHex(grid, row, col) {
+function addRowClassLevel(rowDiv, event) {
+     if (event.target.id === "easyModeButton") {
+        rowDiv.classList.add("easyModeRow")
+    } else if (event.target.id === "mediumModeButton") {
+        rowDiv.classList.add("mediumModeRow")
+    } else if (event.target.id === "hardModeButton") {
+        rowDiv.classList.add("hardModeRow")
+    }
+}
+
+function revealHex(row, col) {
     // reveal if the cell is a mine or show the number of neighbors for each cell
     const cell = grid[row][col];
 
@@ -156,20 +170,60 @@ function revealHex(grid, row, col) {
     if (cell.mine) {
         hex.classList.add("mine");
         hex.textContent = "💣";
-        gameOver(grid);
+        gameOver();
         return;
     }
 
     if (cell.neighbors > 0) {
         hex.textContent = cell.neighbors;
+    } else {
+        revealNeighbors(row, col)
     }
-    checkWin(grid);
+
+    checkWin();
 }
 
-function toggleFlag(grid, row, col) {
+function revealNeighbors(row, col) {
+    const evenOffsets = [
+        [-1, -1],
+        [-1, 0],
+        [0, -1],
+        [0, 1],
+        [1, -1],
+        [1, 0],
+    ];
+
+    const oddOffsets = [
+        [-1, 0],
+        [-1, 1],
+        [0, -1],
+        [0, 1],
+        [1, 0],
+        [1, 1]
+    ];
+
+    let offsets = []
+    if (row % 2 == 0) {
+        offsets = evenOffsets;
+    } else {
+        offsets = oddOffsets;
+    }
+
+    for (const [dRow, dCol] of offsets) {
+        const nRow = row + dRow;
+        const nCol = col + dCol;
+        const hex = document.querySelector(`.hex[data-row="${nRow}"][data-col="${nCol}"]`);
+
+        if (nRow < 0 || nRow >= grid.length) continue;
+        if (nCol < 0 || nCol >= grid[nRow].length) continue;
+
+        revealHex(nRow, nCol);
+    }
+}
+
+function toggleFlag(row, col) {
     // flag each cell that the user thinks is a mine
     const cell = grid[row][col];
-    console.log(cell)
     const hex = document.querySelector(`.hex[data-row="${row}"][data-col="${col}"]`);
     if (cell.revealed) return
     if (cell.flagged == true) {
@@ -181,7 +235,7 @@ function toggleFlag(grid, row, col) {
     }
 }
 
-function checkWin(grid) {
+function checkWin() {
     // check to see if all not mine cells are revealed
     let allSafeCellsReaveled = true
     for (let r = 0; r < grid.length; r++) {
@@ -195,27 +249,29 @@ function checkWin(grid) {
         }
     }
     if (allSafeCellsReaveled) {
-        gameWon(grid)
+        gameWon()
     }
 }
 
-function gameWon(grid) {
+function gameWon() {
     // display a screen telling them they won
     const board = document.querySelector(".board")
     const winConfetti = '<img class="gameWinConfetti" src="confetti.gif" alt="animation for when you win"></img>'
     board.insertAdjacentHTML("beforeend", winConfetti)
-    revealBoard(grid)
+    revealBoard();
+    stopTimer();
 }
 
-function gameOver(grid) {
+function gameOver() {
     // display a screen telling them they lost and letting them see where all the mines were
     const board = document.querySelector(".board")
     const loseExplostion = '<img class="loseExplostion" src="explosion.gif" alt="animation for when you lose">'
     board.insertAdjacentHTML("beforeend", loseExplostion)
-    revealBoard(grid);
+    revealBoard();
+    stopTimer();
 }
 
-function revealBoard(grid) {
+function revealBoard() {
     // reveal all of the cells
     for (let r = 0; r < grid.length; r++) {
         for (let c = 0; c < grid[r].length; c++) {
@@ -245,24 +301,64 @@ function revealBoard(grid) {
 }
 
 function easyLevel(event) {
-    const grid = createGrid(9, 7)
-    placeMines(grid, 13)
-    calculateAllNeighbors(grid)
-    createBoard(grid, event)
+    reset()
+    createGrid(9, 7)
+    placeMines(13)
+    calculateAllNeighbors() 
+    createBoard(event)
 }
 
 function mediumLevel(event) {
-    const grid = createGrid(9, 7)
-    placeMines(grid, 10)
-    calculateAllNeighbors(grid)
-    createBoard(grid, event)
+    reset()
+    createGrid(10, 10)
+    placeMines(20)
+    calculateAllNeighbors()
+    createBoard(event)
 }
 
 function hardLevel(event) {
-    const grid = createGrid(9, 7)
-    placeMines(grid, 10)
-    calculateAllNeighbors(grid)
-    createBoard(grid, event)
+    reset()
+    createGrid(12, 12)
+    placeMines(34)
+    calculateAllNeighbors()   
+    createBoard(event)
+}
+
+function startTimer() {
+    timer ??= setInterval(returnTime, 1000)
+}
+
+function stopTimer() {
+        clearInterval(timer)
+        timer = null
+}
+
+function returnTime() {
+    timeSec += 1;
+    if (timeSec > 59) {
+        timeSec = 0;
+        timeMin += 1;
+    }
+
+    const timerEl = document.querySelector("#timer")
+
+    if (timeSec < 10) {
+        timerEl.innerHTML = `${timeMin}:0${timeSec}`
+    } else {
+        timerEl.innerHTML = `${timeMin}:${timeSec}`
+    }
+}
+
+function reset() {
+    const board = document.querySelector(".board");
+    board.innerHTML = "";
+
+    grid = []
+
+    stopTimer();
+    timeSec = 0
+    timeMin = 0
+    document.querySelector("#timer").innerHTML = "0:00"
 }
 
 const easyMode = document.querySelector("#easyModeButton");
@@ -273,7 +369,3 @@ mediumMode.addEventListener("click", mediumLevel)
 
 const hardMode = document.querySelector("#hardModeButton");
 hardMode.addEventListener("click", hardLevel)
-
-// function getNeighbors() {}
-// function revealNeighbors() {}
-// function resetGame() {}

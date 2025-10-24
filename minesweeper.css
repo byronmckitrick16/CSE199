@@ -50,10 +50,6 @@ h1 {
     flex: 0 0 auto;
 }
 
-.timerDiv {
-    width: 300px;
-}
-
 .hex {
     background-color: #808080;
     clip-path:polygon(
@@ -73,13 +69,42 @@ h1 {
     font-size: 1.5rem;
 }
 
+.mediumMode {
+    width: 50px;
+    height: 72px;
+    margin-bottom: -18px;
+}
+
+.hardMode {
+    width: 42px;
+    height: 60px;
+    margin-bottom: -15px;
+}
+
 .hex_row {
     display: flex;
     gap:2px;
 }
 
-.hex_row:nth-child(even) {
+.easyModeRow:nth-child(even) {
     margin-left: 35px;
+}
+
+.mediumModeRow:nth-child(even) {
+    margin-left: 26px;
+}
+
+.hardModeRow:nth-child(even) {
+    margin-left:22px;
+}
+
+.timerDiv {
+    width: 300px;
+}
+
+#timer {
+    margin: 50px;
+    font-size: 3rem;
 }
 
 .revealed {
