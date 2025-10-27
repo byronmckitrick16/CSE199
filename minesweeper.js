@@ -256,19 +256,26 @@ function checkWin() {
 function gameWon() {
     // display a screen telling them they won
     const board = document.querySelector(".board")
-    const winConfetti = '<img class="gameWinConfetti" src="confetti.gif" alt="animation for when you win"></img>'
+    const winConfetti = '<img class="gameWinConfetti animation" src="confetti.gif" alt="animation for when you win"></img>'
     board.insertAdjacentHTML("beforeend", winConfetti)
     revealBoard();
     stopTimer();
+    setTimeout(stopAnimation, 5500)
 }
 
 function gameOver() {
     // display a screen telling them they lost and letting them see where all the mines were
     const board = document.querySelector(".board")
-    const loseExplostion = '<img class="loseExplostion" src="explosion.gif" alt="animation for when you lose">'
+    const loseExplostion = '<img class="loseExplostion animation" src="explosion.gif" alt="animation for when you lose">'
     board.insertAdjacentHTML("beforeend", loseExplostion)
     revealBoard();
     stopTimer();
+    setTimeout(stopAnimation, 2500)
+}
+
+function stopAnimation() {
+    const animation = document.querySelector(".animation")
+    animation.remove();
 }
 
 function revealBoard() {
