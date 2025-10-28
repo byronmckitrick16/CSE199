@@ -1,0 +1,31 @@
+:root {
+    --primary-color:#333;
+    --secondary-color:#333;
+    --accent-color1:#333;
+    --primary-font: georgia;
+    --secondary-font: arial;
+}
+
+body {
+    margin: 0;
+}
+
+header {
+    background-color: var(--secondary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header img {
+    border-radius: 50%;
+    max-width: 125px;
+    margin: 20px;
+    margin-left: 50px;
+}
+
+header a {
+    text-decoration: none;
+    font-size: 2rem;
+    margin-right: 50px;
+}

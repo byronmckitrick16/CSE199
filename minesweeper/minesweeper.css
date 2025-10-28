@@ -52,10 +52,10 @@ h1 {
 
 .hex {
     background-color: #808080;
-    clip-path:polygon(
+    /* clip-path:polygon(
         50% 0%, 100% 25%, 100% 75%,
         50% 100%, 0% 75%, 0% 25%
-    );
+    ); */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -86,7 +86,7 @@ h1 {
     gap:2px;
 }
 
-.easyModeRow:nth-child(even) {
+/* .easyModeRow:nth-child(even) {
     margin-left: 35px;
 }
 
@@ -96,7 +96,7 @@ h1 {
 
 .hardModeRow:nth-child(even) {
     margin-left:22px;
-}
+} */
 
 .timerDiv {
     width: 300px;
