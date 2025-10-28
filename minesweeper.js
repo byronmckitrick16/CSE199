@@ -177,7 +177,7 @@ function revealHex(row, col) {
     if (cell.neighbors > 0) {
         hex.textContent = cell.neighbors;
     } else {
-        revealNeighbors(row, col)
+        setTimeout(revealNeighbors, 25, row, col)
     }
 
     checkWin();
