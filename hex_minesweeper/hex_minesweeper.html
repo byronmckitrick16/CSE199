@@ -5,111 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Byron Mcktirick">
     <meta name="description" content="The classic minesweeper game but with a small twist. Instead of the sqaures everything is done with hexagons.">
+    <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="hex_minesweeper.css">
     <script src="hex_minesweeper.js" defer></script>
     <title>Hex Minesweeper</title>
 </head>
 <body>
-    <h1>Hexagon Minesweeper</h1>
-    <section class="game">
-        <div class="buttons">
-            <button id="easyModeButton">Easy</button>
-            <button id="mediumModeButton">Medium</button>
-            <button id="hardModeButton">Hard</button>
-        </div>
-        <section class="board">
-            <!-- <div class="hex_row">
-                <div class="hex"></div>
-                <div class="hex revealed"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
+    <header>
+        <nav>
+            <a href="/index.html">
+            <img src="/images/game.jpg" alt="logo image">
+            </a>
+            <h1>Hexagon Minesweeper</h1>
+        </nav>
+    </header>
+    <main>
+        <section class="game">
+            <div class="buttons">
+                <button id="easyModeButton">Easy</button>
+                <button id="mediumModeButton">Medium</button>
+                <button id="hardModeButton">Hard</button>
             </div>
-            <div class="hex_row">
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
+            <section class="board">
+                <!-- <div class="hex_row">
+                    <div class="hex"></div>
+                    <div class="hex revealed"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                </div>
+                <div class="hex_row">
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                </div>
+                <div class="hex_row">
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                </div>
+                <div class="hex_row">
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                </div>
+                <div class="hex_row">
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                </div>
+                <div class="hex_row">
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                </div>
+                <div class="hex_row">
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                </div>
+                <div class="hex_row">
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                </div>
+                <div class="hex_row">
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                    <div class="hex"></div>
+                </div> -->
+                <!-- <img class="gameWinConfetti" src="/confetti.gif" alt="animation for when you win"> -->
+                <!-- <img class="loseExplostion" src="/explosion.gif" alt="animation for when you lose"> -->
+            </section>
+            <div class="timerDiv">
+                <p id="timer">0:00</p>
             </div>
-            <div class="hex_row">
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-            </div>
-            <div class="hex_row">
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-            </div>
-            <div class="hex_row">
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-            </div>
-            <div class="hex_row">
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-            </div>
-            <div class="hex_row">
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-            </div>
-            <div class="hex_row">
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-            </div>
-            <div class="hex_row">
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-                <div class="hex"></div>
-            </div> -->
-            <!-- <img class="gameWinConfetti" src="/confetti.gif" alt="animation for when you win"> -->
-             <!-- <img class="loseExplostion" src="/explosion.gif" alt="animation for when you lose"> -->
         </section>
-        <div class="timerDiv">
-            <p id="timer">0:00</p>
-        </div>
-    </section>
+    </main>
 </body>
 </html>

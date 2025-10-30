@@ -1,31 +1,69 @@
 :root {
-    --primary-color:#333;
-    --secondary-color:#333;
-    --accent-color1:#333;
-    --primary-font: georgia;
-    --secondary-font: arial;
+    --primary-color: #a3a3a3;
+    --secondary-color: #111111;
+    --accent-color1: #333;
+    --accent-color2: #6e6e6e;
 }
 
 body {
+    background: var(--primary-color);
+    font-family: sans-serif;
+    font-size: 20px;
     margin: 0;
 }
 
 header {
-    background-color: var(--secondary-color);
+    background-color: var(--accent-color1);
+    margin-bottom: 30px;
+}
+
+nav {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
-header img {
+nav a {
+    width: 35%;
+}
+
+nav h1 {
+    width: 65%;
+    color: var(--primary-color)
+}
+
+nav img {
     border-radius: 50%;
     max-width: 125px;
     margin: 20px;
     margin-left: 50px;
 }
 
-header a {
+.content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.content div {
+    margin: 10px;
+}
+
+.gameLink {
     text-decoration: none;
-    font-size: 2rem;
-    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.gameLink img {
+    width: 250px;
+}
+
+.gameLink p {
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+}
+
+.gameLink:hover {
+    background-color: var(--accent-color2);
 }
