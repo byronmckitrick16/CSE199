@@ -20,14 +20,10 @@ header {
 nav {
     display: flex;
     align-items: center;
-}
-
-nav a {
-    width: 35%;
+    justify-content: center;
 }
 
 nav h1 {
-    width: 65%;
     color: var(--primary-color)
 }
 
