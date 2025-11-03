@@ -276,6 +276,7 @@ function gameOver() {
 function stopAnimation() {
     const animation = document.querySelector(".animation")
     animation.remove();
+    clearTimeout();
 }
 
 function revealBoard() {
