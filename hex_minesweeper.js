@@ -270,7 +270,7 @@ function gameOver() {
     board.insertAdjacentHTML("beforeend", loseExplostion)
     revealBoard();
     stopTimer();
-    setTimeout(stopAnimation, 2500)
+    // setTimeout(stopAnimation, 2500)
 }
 
 function stopAnimation() {
