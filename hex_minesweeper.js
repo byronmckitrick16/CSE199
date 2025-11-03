@@ -256,7 +256,7 @@ function checkWin() {
 function gameWon() {
     // display a screen telling them they won
     const board = document.querySelector(".board")
-    const winConfetti = '<img class="gameWinConfetti animation" src="/images/confetti.gif" alt="animation for when you win"></img>'
+    const winConfetti = '<img class="gameWinConfetti animation" src="images/confetti.gif" alt="animation for when you win"></img>'
     board.insertAdjacentHTML("beforeend", winConfetti)
     revealBoard();
     stopTimer();
@@ -270,7 +270,7 @@ function gameOver() {
     board.insertAdjacentHTML("beforeend", loseExplostion)
     revealBoard();
     stopTimer();
-    // setTimeout(stopAnimation, 2500)
+    setTimeout(stopAnimation, 2500)
 }
 
 function stopAnimation() {
