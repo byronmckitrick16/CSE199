@@ -266,7 +266,7 @@ function gameWon() {
 function gameOver() {
     // display a screen telling them they lost and letting them see where all the mines were
     const board = document.querySelector(".board")
-    const loseExplostion = '<img class="loseExplostion animation" src="/images/explosion.gif" alt="animation for when you lose">'
+    const loseExplostion = '<img class="loseExplostion animation" src="images/explosion.gif" alt="animation for when you lose">'
     board.insertAdjacentHTML("beforeend", loseExplostion)
     revealBoard();
     stopTimer();
