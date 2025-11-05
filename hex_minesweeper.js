@@ -260,7 +260,7 @@ function gameWon() {
     board.insertAdjacentHTML("beforeend", winConfetti)
     revealBoard();
     stopTimer();
-    setTimeout(stopAnimation, 5500)
+    setTimeout(stopAnimation, 2500)
 }
 
 function gameOver() {
@@ -318,16 +318,16 @@ function easyLevel(event) {
 
 function mediumLevel(event) {
     reset()
-    createGrid(10, 10)
-    placeMines(20)
+    createGrid(15, 15)
+    placeMines(33)
     calculateAllNeighbors()
     createBoard(event)
 }
 
 function hardLevel(event) {
     reset()
-    createGrid(12, 12)
-    placeMines(34)
+    createGrid(20, 19)
+    placeMines(60)
     calculateAllNeighbors()   
     createBoard(event)
 }

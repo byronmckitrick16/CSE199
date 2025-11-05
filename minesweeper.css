@@ -98,8 +98,5 @@ main {
 
 .loseExplostion {
     width: 575px;
-    /* height: 600px; */
     position: fixed;
-    padding-top: 80px;
-    padding-bottom: 90px;
 }

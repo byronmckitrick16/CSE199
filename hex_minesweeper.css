@@ -65,15 +65,15 @@ main {
 }
 
 .mediumMode {
-    width: 50px;
-    height: 72px;
-    margin-bottom: -18px;
+    width: 34px;
+    height: 48px;
+    margin-bottom: -12px;
 }
 
 .hardMode {
-    width: 42px;
-    height: 60px;
-    margin-bottom: -15px;
+    width: 27px;
+    height: 34.5px;
+    margin-bottom: -8px;
 }
 
 .hex_row {
@@ -86,11 +86,11 @@ main {
 }
 
 .mediumModeRow:nth-child(even) {
-    margin-left: 26px;
+    margin-left: 18px;
 }
 
 .hardModeRow:nth-child(even) {
-    margin-left:22px;
+    margin-left: 13px;
 }
 
 .timerDiv {
@@ -111,13 +111,17 @@ main {
 }
 
 .gameWinConfetti {
-    height: 570px;
+    width: 100%;
     position: fixed;
+    bottom: 0;
+    left: 0;
 }
 
 .loseExplostion {
-    width: 575px;
+    height: 100%;
+    width: 100%;
+    align-self: center;
     position: fixed;
-    padding-top: 80px;
-    padding-bottom: 90px;
+    bottom: 0;
+    left: 0;
 }

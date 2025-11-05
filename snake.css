@@ -1,0 +1,17 @@
+:root {
+    --primary-color: #a3a3a3;
+    --secondary-color: #111111;
+    --accent-color1: #333;
+    --accent-color2: #6e6e6e;
+}
+
+.gameContent {
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+}
+
+#game {
+    border: 3px solid var(--secondary-color);
+    background-color: var(--accent-color1);
+}
