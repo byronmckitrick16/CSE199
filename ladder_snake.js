@@ -6,6 +6,8 @@ const gridWidth = canvas.width / tileSize;
 const gridHeight = canvas.height / tileSize;
 
 let food, snake, direction, score, speed, startGame, running, gameOver;
+let ladder = 0
+let deadSnake = []
 
 function draw() {
     // draw the different things for the game on te canvas
@@ -35,23 +37,35 @@ function draw() {
         ctx.roundRect(x, y, tileSize, tileSize, 5)
         ctx.fill()
     });
+
+    drawDeadSnake()
+
+    // draw the eyes on the snake
+    const offset = tileSize / 4;
+    const x = snake[0].x * tileSize;
+    const y = snake[0].y * tileSize;
+    ctx.fillStyle = "black"
+    ctx.beginPath();
+    if (direction.x == 0) {
+        ctx.arc(x + tileSize / 2 - offset / 1.5, y + tileSize / 2 - offset / 2, 2, 0, Math.PI * 2);
+        ctx.arc(x + tileSize / 2 + offset / 1.5, y + tileSize / 2 - offset / 2, 2 , 0, Math.PI * 2);
+    } else {
+        ctx.arc(x + tileSize / 2 - offset / 2, y + tileSize / 2 - offset / 1.5, 2, 0, Math.PI * 2);
+        ctx.arc(x + tileSize / 2 - offset / 2, y + tileSize / 2 + offset / 1.5, 2, 0, Math.PI * 2);
+    }
+    ctx.fill()
 }
 
-function drawEyes() {
-    // draw the eyes on the snake
-        const offset = tileSize / 4;
-        const x = snake[0].x * tileSize;
-        const y = snake[0].y * tileSize;
-        ctx.fillStyle = "black"
-        ctx.beginPath();
-        if (direction.x == 0) {
-            ctx.arc(x + tileSize / 2 - offset / 1.5, y + tileSize / 2 - offset / 2, 2, 0, Math.PI * 2);
-            ctx.arc(x + tileSize / 2 + offset / 1.5, y + tileSize / 2 - offset / 2, 2 , 0, Math.PI * 2);
-        } else {
-            ctx.arc(x + tileSize / 2 - offset / 2, y + tileSize / 2 - offset / 1.5, 2, 0, Math.PI * 2);
-            ctx.arc(x + tileSize / 2 - offset / 2, y + tileSize / 2 + offset / 1.5, 2, 0, Math.PI * 2);
-        }
-        ctx.fill()
+function drawDeadSnake() {
+    deadSnake.forEach(snake => {
+        snake.forEach(s => {
+            const x = s.x * tileSize;
+            const y = s.y * tileSize;
+            ctx.fillStyle = "#25aa0bff"
+            ctx.roundRect(x, y, tileSize, tileSize, 5)
+            ctx.fill()
+        })
+    })
 }
 
 function spawnFood() {
@@ -59,6 +73,14 @@ function spawnFood() {
     food = {
         x: Math.floor(Math.random() * gridWidth),
         y: Math.floor(Math.random() * gridHeight)   
+    }
+
+    for (let i = 0; i < deadSnake.length; i++) {
+        for (let j = 0; j < deadSnake[i].length; j++) {
+            if (deadSnake[i][j].x == food.x && deadSnake[i][j].y == food.y) {
+                spawnFood();
+            }
+        }
     }
 }
 
@@ -77,7 +99,6 @@ function resetGame() {
     spawnFood()
     inputScore()
     draw()
-    drawEyes()
 
     if (gameOver) {
         const gameOverDiv = document.querySelector(".gameOver");
@@ -103,13 +124,18 @@ function gameLoop() {
         const restartButton = document.querySelector(".restart");
         restartButton.addEventListener("click", resetGame);
         gameOver = true;
-        setHighScore()
+        setHighScore();
+        saveSnake();
         return
     }
 
     draw();
-    drawEyes();
     const snakeLoop = setTimeout(gameLoop, speed);
+}
+
+function saveSnake() {
+    deadSnake.push(snake)
+    // console.log(deadSnake)
 }
 
 function moveSnake() {
@@ -146,7 +172,17 @@ function checkCollision() {
         if (snake[i].x == head.x && snake[i].y == head.y) return true;
     }
 
+    for (let i = 0; i < deadSnake.length; i++) {
+        for (let j = 0; j < deadSnake[i].length; j++) {
+            if (deadSnake[i][j].x == head.x && deadSnake[i][j].y == head.y) return true;
+        }
+    }
+
     return false;
+}
+
+function snakeCollision() {
+    const head = snake[0]
 }
 
 function inputScore() {
@@ -157,7 +193,7 @@ function inputScore() {
 
 function setHighScore() {
     // save the users high score to local storage and check if a new score is better then the previous high score
-    let highScore = localStorage.getItem("snakeHighScore")
+    let highScore = localStorage.getItem("ladderSnakeHighScore")
     if (!highScore) {
         highScore = 0
     }
@@ -165,7 +201,7 @@ function setHighScore() {
 
     if (score > highScore) {
         highScore = score
-        localStorage.setItem("snakeHighScore", highScore)
+        localStorage.setItem("ladderSnakeHighScore", highScore)
     }
     highScoreToHtml(highScore)
 }
