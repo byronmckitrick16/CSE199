@@ -84,7 +84,7 @@ function spawnFood() {
     }
 }
 
-function resetGame() {
+function restartGame() {
     snake = [
         {x:10, y:10},
         {x:9, y:10},
@@ -93,6 +93,23 @@ function resetGame() {
 
     direction = {x:1, y:0};
     score = 0
+    speed = 120
+    startGame = false;
+    running = false;
+    spawnFood()
+    inputScore()
+    draw()
+}
+
+function resetGame() {
+    snake = [
+        {x:10, y:10},
+        {x:9, y:10},
+        {x:8, y:10}
+    ]
+
+    direction = {x:1, y:0};
+    score -= 5
     speed = 120
     startGame = false;
     running = false;
@@ -115,8 +132,8 @@ function gameLoop() {
 
     if (checkCollision()) {
         const gameOverDiv = `<div class="gameOver">
-                <p>Game Over! Final Score: ${score}</p>
-                <button class="restart">Restart</button></div>`
+                <p>Current Score: ${(score - 5)}</p>
+                <button class="restart">Continue</button></div>`
         const contentDiv = document.querySelector(".gameContent")
         contentDiv.insertAdjacentHTML("beforeend", gameOverDiv)
         running = false;
@@ -146,7 +163,10 @@ function moveSnake() {
     }
 
     snake.unshift(head);
+    addScore(head);
+}
 
+function addScore(head) {
     if (head.x == food.x && head.y == food.y) {
         score++;
         spawnFood();
@@ -230,5 +250,6 @@ document.addEventListener("keydown", e => {
     }
 });
 
-resetGame();
+// with the reset change the scoring so that until they compeltly reset it doesn't reset the score but takes 5 points off each death
+restartGame();
 setHighScore()
