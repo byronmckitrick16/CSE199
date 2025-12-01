@@ -48,7 +48,7 @@ function draw() {
     ctx.beginPath();
     if (direction.x == 0) {
         ctx.arc(x + tileSize / 2 - offset / 1.5, y + tileSize / 2 - offset / 2, 2, 0, Math.PI * 2);
-        ctx.arc(x + tileSize / 2 + offset / 1.5, y + tileSize / 2 - offset / 2, 2 , 0, Math.PI * 2);
+        ctx.arc(x + tileSize / 2 + offset / 1.5, y + tileSize / 2 - offset / 2, 2, 0, Math.PI * 2);
     } else {
         ctx.arc(x + tileSize / 2 - offset / 2, y + tileSize / 2 - offset / 1.5, 2, 0, Math.PI * 2);
         ctx.arc(x + tileSize / 2 - offset / 2, y + tileSize / 2 + offset / 1.5, 2, 0, Math.PI * 2);
@@ -85,20 +85,9 @@ function spawnFood() {
 }
 
 function restartGame() {
-    snake = [
-        {x:10, y:10},
-        {x:9, y:10},
-        {x:8, y:10}
-    ]
-
-    direction = {x:1, y:0};
-    score = 0
-    speed = 120
-    startGame = false;
-    running = false;
-    spawnFood()
-    inputScore()
-    draw()
+    gameOver = false;
+    score = 5
+    resetGame();
 }
 
 function resetGame() {
@@ -152,11 +141,10 @@ function gameLoop() {
 
 function saveSnake() {
     deadSnake.push(snake)
-    // console.log(deadSnake)
 }
 
 function moveSnake() {
-    // give the new inputs for where the snake should be and check if the user got to the food
+    // gives the new inputs for where the snake should be and check if the user got to the food
     const head = {
         x: snake[0].x + direction.x,
         y: snake[0].y + direction.y
@@ -199,10 +187,6 @@ function checkCollision() {
     }
 
     return false;
-}
-
-function snakeCollision() {
-    const head = snake[0]
 }
 
 function inputScore() {
@@ -250,6 +234,7 @@ document.addEventListener("keydown", e => {
     }
 });
 
-// with the reset change the scoring so that until they compeltly reset it doesn't reset the score but takes 5 points off each death
+document.querySelector(".reset").addEventListener("click", restartGame)
+
 restartGame();
 setHighScore()
