@@ -87,6 +87,7 @@ function spawnFood() {
 function restartGame() {
     gameOver = false;
     score = 5
+    deadSnake = []
     resetGame();
 }
 
