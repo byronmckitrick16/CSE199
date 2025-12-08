@@ -5,8 +5,8 @@ const tileSize = 20;
 const gridWidth = canvas.width / tileSize;
 const gridHeight = canvas.height / tileSize;
 
-let food, snake, direction, score, speed, startGame, running, gameOver;
-let ladder = 0
+let food, snake, direction, score, speed, running, gameOver, ladder, ladderImg;
+let ladderNum = 0
 let deadSnake = []
 
 function draw() {
@@ -39,6 +39,7 @@ function draw() {
     });
 
     drawDeadSnake()
+    drawLadder()
 
     // draw the eyes on the snake
     const offset = tileSize / 4;
@@ -57,14 +58,12 @@ function draw() {
 }
 
 function drawDeadSnake() {
-    deadSnake.forEach(snake => {
-        snake.forEach(s => {
-            const x = s.x * tileSize;
-            const y = s.y * tileSize;
-            ctx.fillStyle = "#25aa0bff"
-            ctx.roundRect(x, y, tileSize, tileSize, 5)
-            ctx.fill()
-        })
+    deadSnake.forEach(s => {
+        const x = s.x * tileSize;
+        const y = s.y * tileSize;
+        ctx.fillStyle = "#25aa0bff"
+        ctx.roundRect(x, y, tileSize, tileSize, 5)
+        ctx.fill()
     })
 }
 
@@ -76,18 +75,20 @@ function spawnFood() {
     }
 
     for (let i = 0; i < deadSnake.length; i++) {
-        for (let j = 0; j < deadSnake[i].length; j++) {
-            if (deadSnake[i][j].x == food.x && deadSnake[i][j].y == food.y) {
-                spawnFood();
-            }
+        if (deadSnake[i].x == food.x && deadSnake[i].y == food.y) {
+            spawnFood();
         }
     }
+    
+    ladderSpawnChance()
 }
 
 function restartGame() {
     gameOver = false;
-    score = 5
+    score = 5;
+    ladderNum = 0;
     deadSnake = []
+    inputLadder();
     resetGame();
 }
 
@@ -98,11 +99,12 @@ function resetGame() {
         {x:8, y:10}
     ]
 
+    ladder = [];
+    ladderImg = false;
+    running = false;
     direction = {x:1, y:0};
     score -= 5
     speed = 120
-    startGame = false;
-    running = false;
     spawnFood()
     inputScore()
     draw()
@@ -116,7 +118,7 @@ function resetGame() {
 
 function gameLoop() {
     // loop so that the snake looks like it is moving starting at 120 milisec and speeding up by 2 milisec every time they score till it gets to 60 milisec
-    if (!running) return;
+    if (gameOver) return;
 
     moveSnake();
 
@@ -126,7 +128,6 @@ function gameLoop() {
                 <button class="restart">Continue</button></div>`
         const contentDiv = document.querySelector(".gameContent")
         contentDiv.insertAdjacentHTML("beforeend", gameOverDiv)
-        running = false;
 
         const restartButton = document.querySelector(".restart");
         restartButton.addEventListener("click", resetGame);
@@ -141,7 +142,7 @@ function gameLoop() {
 }
 
 function saveSnake() {
-    deadSnake.push(snake)
+    deadSnake = [...deadSnake, ...snake];
 }
 
 function moveSnake() {
@@ -153,6 +154,7 @@ function moveSnake() {
 
     snake.unshift(head);
     addScore(head);
+    ladderCollision(head)
 }
 
 function addScore(head) {
@@ -182,8 +184,13 @@ function checkCollision() {
     }
 
     for (let i = 0; i < deadSnake.length; i++) {
-        for (let j = 0; j < deadSnake[i].length; j++) {
-            if (deadSnake[i][j].x == head.x && deadSnake[i][j].y == head.y) return true;
+        if (deadSnake[i].x == head.x && deadSnake[i].y == head.y) {
+            if (ladderNum > 0) {
+                ladderNum -= 1
+                inputLadder();
+            } else {
+                return true;
+            }
         }
     }
 
@@ -225,15 +232,62 @@ document.addEventListener("keydown", e => {
     else if (e.key == "ArrowDown" && direction.y == 0) direction = {x:0, y:1};
     else if (e.key == "ArrowLeft" && direction.x == 0) direction = {x:-1, y:0};
     else if (e.key == "ArrowRight" && direction.x == 0) direction = {x:1, y:0};
-});
 
-document.addEventListener("keydown", e => {
-    if (!startGame && (e.key == "ArrowUp" || e.key == "ArrowDown" || e.key == "ArrowLeft" || e.key == "ArrowRight")) {
-        startGame = true;
+    if (!running && (e.key == "ArrowUp" || e.key == "ArrowDown" || e.key == "ArrowLeft" || e.key == "ArrowRight")) {
         running = true;
         gameLoop();
     }
 });
+
+function drawLadder() {
+    const img = new Image();
+    img.src = "images/ladder(3).jpg"
+
+    if (ladderImg) {
+        ctx.drawImage(img, ladder.x * tileSize, ladder.y * tileSize)
+    }
+}
+
+function spawnLadder() {
+    ladder = {
+        x: Math.floor(Math.random() * gridWidth),
+        y: Math.floor(Math.random() * gridHeight)
+    }
+
+    for (let i = 0; i < deadSnake.length; i++) {
+        if (deadSnake[i].x == ladder.x && deadSnake[i].y == ladder.y) {
+            spawnLadder();
+        }
+    }
+}
+
+function ladderSpawnChance() {
+    if (!ladderImg) {
+        const ladderRandom = Math.floor(Math.random() * 3)
+
+        if (ladderRandom == 0) {
+            ladderImg = true;
+            spawnLadder()
+        } else {
+            return
+        }
+    }
+}
+
+function inputLadder() {
+    const ladderDiv = document.querySelector(".ladder");
+    ladderDiv.innerHTML = `<p>Ladder: ${ladderNum}`
+}
+
+function ladderCollision(head) {
+    if (!ladder) return
+
+    if (head.x == ladder.x && head.y == ladder.y) {
+        ladderNum += 1;
+        ladderImg = false;
+        inputLadder();
+    }
+}
 
 document.querySelector(".reset").addEventListener("click", restartGame)
 

@@ -47,7 +47,7 @@
     background-color: var(--accent-color1);
 }
 
-.score, .highScore {
+.score, .highScore, .ladder {
     display: flex;
     align-items: center;
     font-size: 2rem;
@@ -57,6 +57,10 @@
     width: 150px;
     height: 75px;
     border: 3px solid var(--secondary-color);
+}
+
+.ladder {
+    margin-top: 0px;
 }
 
 .gameContent section {
