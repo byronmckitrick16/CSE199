@@ -2,6 +2,8 @@ let grid = [];
 let timer;
 let timeSec = 0;
 let timeMin = 0;
+let gamerunning = false;
+let gameLevel;
 
 function createGrid(rows, colsOdd) {
     // create a grid for the layout of the minesweeper game
@@ -118,8 +120,14 @@ function createBoard(event) {
             hex.dataset.row = r;
             hex.dataset.col = c;
 
-            hex.addEventListener("click", () => {
+            hex.addEventListener("click", (e) => {
                 startTimer();
+                if (!gamerunning) {
+                    gamerunning = true;
+                    // console.log(e)
+                    mineLevel()
+                    calculateAllNeighbors()
+                }
                 revealHex(r, c);
             });
 
@@ -132,6 +140,12 @@ function createBoard(event) {
         }
         board.appendChild(rowDiv);
     }
+}
+
+function mineLevel() {
+    if (gameLevel == "easy") placeMines(13)
+    if (gameLevel == "medium") placeMines(33)
+    if (gameLevel == "hard") placeMines(60)
 }
 
 function addClassLevel(hex, event) {
@@ -311,25 +325,30 @@ function revealBoard() {
 function easyLevel(event) {
     reset()
     createGrid(9, 7)
-    placeMines(13)
-    calculateAllNeighbors() 
     createBoard(event)
+    gameLevel = "easy"
+    // placeMines(13)
+    // calculateAllNeighbors() 
+    
 }
 
 function mediumLevel(event) {
     reset()
     createGrid(15, 15)
-    placeMines(33)
-    calculateAllNeighbors()
     createBoard(event)
+    gameLevel = "medium"
+    // placeMines(33)
+    // calculateAllNeighbors()
+    
 }
 
 function hardLevel(event) {
     reset()
     createGrid(20, 19)
-    placeMines(60)
-    calculateAllNeighbors()   
     createBoard(event)
+    gameLevel = "hard"
+    // placeMines(60)
+    // calculateAllNeighbors()
 }
 
 function startTimer() {
@@ -362,6 +381,7 @@ function reset() {
     board.innerHTML = "";
 
     grid = []
+    gamerunning = false;
 
     stopTimer();
     timeSec = 0
